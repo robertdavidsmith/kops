@@ -13,8 +13,13 @@
 # limitations under the License.
 
 
-DOCKER_REGISTRY?=gcr.io/must-override
-S3_BUCKET?=s3://must-override/
+#DOCKER_REGISTRY?=gcr.io/must-override
+#S3_BUCKET?=s3://must-override/
+
+DOCKER_REGISTRY?=hub.docker.com/r/robertdavidsmith/
+S3_BUCKET?=s3://kops-roberts-bin
+
+
 GCS_LOCATION?=gs://must-override
 GCS_URL=$(GCS_LOCATION:gs://%=https://storage.googleapis.com/%)
 LATEST_FILE?=latest-ci.txt
