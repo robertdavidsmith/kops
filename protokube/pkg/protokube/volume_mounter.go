@@ -57,6 +57,12 @@ func (k *VolumeMountController) mountMasterVolumes() ([]*Volume, error) {
 
 		glog.V(2).Infof("Master volume %q is attached at %q", v.ID, v.LocalDevice)
 
+		if v.LocalDevice == "/dev/xvdu" || v.LocalDevice == "/dev/xvdv" || v.LocalDevice == "/dev/xvdw" || v.LocalDevice == "/dev/xvdx" || v.LocalDevice == "/dev/xvdy" || v.LocalDevice == "/dev/xvdz"  {
+		   glog.V(2).Infof("Hacking LocalDevice %q is attached at %q", v.ID, v.LocalDevice)
+		   v.LocalDevice = "/dev/xvdc"
+		   glog.V(2).Infof("Hacked LocalDevice %q is attached at %q", v.ID, v.LocalDevice)
+		}
+
 		mountpoint := "/mnt/master-" + v.ID
 
 		// On ContainerOS, we mount to /mnt/disks instead (/mnt is readonly)
