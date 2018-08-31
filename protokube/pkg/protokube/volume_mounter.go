@@ -49,6 +49,8 @@ func (k *VolumeMountController) mountMasterVolumes() ([]*Volume, error) {
 		return nil, fmt.Errorf("unable to attach master volumes: %v", err)
 	}
 
+	nvm_num := 2
+
 	for _, v := range attached {
 		existing := k.mounted[v.ID]
 		if existing != nil {
@@ -59,7 +61,8 @@ func (k *VolumeMountController) mountMasterVolumes() ([]*Volume, error) {
 
 		if v.LocalDevice == "/dev/xvdu" || v.LocalDevice == "/dev/xvdv" || v.LocalDevice == "/dev/xvdw" || v.LocalDevice == "/dev/xvdx" || v.LocalDevice == "/dev/xvdy" || v.LocalDevice == "/dev/xvdz"  {
 		   glog.V(2).Infof("Hacking LocalDevice %q is attached at %q", v.ID, v.LocalDevice)
-		   v.LocalDevice = "/dev/xvdc"
+		   v.LocalDevice = fmt.Sprintf("/dev/nvme%dn1", nvm_num)
+		   nvm_num++
 		   glog.V(2).Infof("Hacked LocalDevice %q is attached at %q", v.ID, v.LocalDevice)
 		}
 

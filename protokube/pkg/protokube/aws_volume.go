@@ -292,22 +292,22 @@ func (v *AWSVolumes) FindMountedVolume(volume *Volume) (string, error) {
 		return "", fmt.Errorf("error checking for device %q: %v", device, err)
 	}
 
-	if volume.ID != "" {
-		expected := volume.ID
-		expected = "nvme-Amazon_Elastic_Block_Store_" + strings.Replace(expected, "-", "", -1)
+//	if volume.ID != "" {
+//		expected := volume.ID
+//		expected = "nvme-Amazon_Elastic_Block_Store_" + strings.Replace(expected, "-", "", -1)
 
 		// Look for nvme devices
 		// On AWS, nvme volumes are not mounted on a device path, but are instead mounted on an nvme device
 		// We must identify the correct volume by matching the nvme info
-		device, err := findNvmeVolume(expected)
-		if err != nil {
-			return "", fmt.Errorf("error checking for nvme volume %q: %v", expected, err)
-		}
-		if device != "" {
-			glog.Infof("found nvme volume %q at %q", expected, device)
-			return device, nil
-		}
-	}
+//		device, err := findNvmeVolume(expected)
+//		if err != nil {
+//			return "", fmt.Errorf("error checking for nvme volume %q: %v", expected, err)
+//		}
+//		if device != "" {
+//			glog.Infof("found nvme volume %q at %q", expected, device)
+//			return device, nil
+//		}
+//	}
 
 	return "", nil
 }

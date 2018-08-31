@@ -43,7 +43,7 @@ import (
 var (
 	flags = pflag.NewFlagSet("", pflag.ExitOnError)
 	// BuildVersion is overwritten during build. This can be used to resolve issues.
-	BuildVersion = "0.445"
+	BuildVersion = "0.447"
 )
 
 func main() {
