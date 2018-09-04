@@ -20,6 +20,7 @@ import (
 	"fmt"
 	"io"
 	"strings"
+	"time"
 
 	"github.com/spf13/cobra"
 	"k8s.io/apimachinery/pkg/util/validation/field"
@@ -27,6 +28,7 @@ import (
 	"k8s.io/kops/cmd/kops/util"
 	api "k8s.io/kops/pkg/apis/kops"
 	"k8s.io/kops/pkg/featureflag"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 type SetClusterOptions struct {
@@ -88,6 +90,18 @@ func SetClusterFields(fields []string, cluster *api.Cluster, instanceGroups []*a
 			for _, c := range cluster.Spec.EtcdClusters {
 				c.Version = kv[1]
 			}
+
+		case "cluster.spec.etcdClusters[*].leaderElectionTimeout":
+		       dura, err := time.ParseDuration(kv[1])
+
+		       if err != nil {
+                                return fmt.Errorf("cannot parse election timeout: %q", kv[1])
+		       }
+
+                       for _, c := range cluster.Spec.EtcdClusters {
+                                c.LeaderElectionTimeout = &metav1.Duration{Duration: dura}
+                       }
+
 		case "cluster.spec.etcdClusters[*].manager.image":
 			for _, etcd := range cluster.Spec.EtcdClusters {
 				if etcd.Manager == nil {
